@@ -7,6 +7,7 @@
 <body>
     <h2>Daftar Buku</h2>
     <a href="index.php?page=buku&action=create">Tambah Data</a>
+    <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Kode Buku</th>
@@ -22,11 +23,11 @@
             <td><?= htmlspecialchars($b['penulis']) ?></td>
             <td><?= htmlspecialchars($b['tahun_terbit']) ?></td>
             <td>
-                <a href="index.php?page=buku&action=edit&kode_buku=<?= $b['kode_buku'] ?>">Edit</a>
-                <form method="post" action="index.php?page=buku&action=delete" style="display:inline" onsubmit="return confirm('Hapus data ini?')">
-                    <input type="hidden" name="kode_buku" value="<?= $b['kode_buku'] ?>">
-                    <button type="submit">Hapus</button>
-                </form>
+                <a href="index.php?page=buku&action=edit&kode_buku=<?= $b['kode_buku'] ?>">Edit</a> |
+                <a href="index.php?page=buku&action=delete&kode_buku=<?= $b['kode_buku'] ?>"
+                   onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                    Hapus
+                </a>
             </td>
         </tr>
         <?php endforeach; ?>

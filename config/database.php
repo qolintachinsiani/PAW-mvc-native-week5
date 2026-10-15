@@ -2,7 +2,7 @@
 class Database
 {
  private string $host = 'localhost';
- private string $db = 'buku';
+ private string $db = 'data_buku';
  private string $user = 'root';
  private string $pass = '';
  public function connect(): PDO

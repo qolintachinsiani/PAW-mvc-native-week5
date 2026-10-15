@@ -20,6 +20,15 @@ class Buku
         return $stmt->fetch();
     }
 
+    public function findByKodeBuku(string $kode_buku): array | false
+    {
+        $stmt = $this->db->prepare(
+            'SELECT id, kode_buku, judul, penulis, tahun_terbit FROM buku WHERE kode_buku = :kode_buku'
+        );
+        $stmt->execute(['kode_buku' => $kode_buku]);
+        return $stmt->fetch();
+    }
+
     public function insert(array $data): bool
     {
         $sql = 'INSERT INTO buku (kode_buku, judul, penulis, tahun_terbit) VALUES (:kode_buku, :judul, :penulis, :tahun_terbit)';
@@ -45,12 +54,12 @@ class Buku
         ]);
     }
 
-    public function delete(int $id): bool
-    {
-        $stmt = $this->db->prepare(
-            'DELETE FROM buku WHERE id = :id'
-        );
-        return $stmt->execute(['id' => $id]);
-    }
+    public function delete(string $kode_buku): bool
+{
+    $stmt = $this->db->prepare(
+        'DELETE FROM buku WHERE kode_buku = :kode_buku'
+    );
+    return $stmt->execute([':kode_buku' => $kode_buku]);
+}
 }
 ?>

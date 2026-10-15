@@ -24,8 +24,9 @@ class BukuController
 
     public function edit(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
-        $buku = $this->model->findById($id);
+        $kode_buku = $_GET['kode_buku'] ?? '';
+        $buku = $this->model->findByKodeBuku($kode_buku);
+
         if (!$buku) {
             http_response_code(404);
             exit('Data buku tidak ditemukan.');
@@ -35,17 +36,28 @@ class BukuController
 
     public function update(): void
     {
-        $id = (int) ($_POST['id'] ?? 0);
+        // Jika update menggunakan id atau kode_buku lama sebagai acuan, sesuaikan di sini.
+        // Berdasarkan kode sebelumnya, kita gunakan kode_buku atau id jika diperlukan.
         $data = $this->validateInput($_POST);
+        
+        // Asumsi model update menerima parameter identifikasi (misal id atau kode_buku)
+        // Jika tabel Anda menggunakan primary key 'id' untuk update:
+        $id = (int) ($_POST['id'] ?? 0);
         $this->model->update($id, $data);
+        
         header('Location: index.php?page=buku');
         exit;
     }
 
     public function delete(): void
     {
-        $id = (int) ($_POST['id'] ?? 0);
-        $this->model->delete($id);
+        // Diubah dari $_POST['id'] menjadi $_GET['kode_buku'] agar sesuai dengan link di view
+        $kode_buku = $_GET['kode_buku'] ?? '';
+
+        if ($kode_buku !== '') {
+            $this->model->delete($kode_buku);
+        }
+
         header('Location: index.php?page=buku');
         exit;
     }
@@ -64,4 +76,4 @@ class BukuController
         return $data;
     }
 }
-?> 
+?>
